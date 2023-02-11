@@ -1,0 +1,23 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"start": "node api/server.js",
+		"dev": " nodemon api/server",
+		"prod": "set NODE_ENV=PRODUCTION && nodemon api/server",
+		"cleanDB": "node api/utils/dbCleaner"
+	},
+	"author": "Victor R",
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"mongoose": "^6.9.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.20"
+	}
+}
