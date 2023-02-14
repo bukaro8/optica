@@ -65,6 +65,7 @@ const getProductById = async (req, res) => {
 
 //?Create a new product
 const newProduct = async (req, res) => {
+	req.body.user = req.user.id;
 	const product = await Product.create(req.body);
 	res.status(201).send({
 		success: true,
