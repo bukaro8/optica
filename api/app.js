@@ -11,5 +11,5 @@ const products = require('./routes/product.js');
 const users = require('./routes/user.js');
 
 app.use('/api/v1', products);
-app.use('/api/v1/register', users);
+app.use('/api/v1/', users);
 module.exports = app;
