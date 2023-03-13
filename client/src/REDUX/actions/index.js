@@ -7,7 +7,7 @@ export function getAllProducts() {
 		const json = await back.get('/products');
 		return dispatch({
 			type: GET_PRODUCTS,
-			payload: json.data,
+			payload: json.data.products,
 		});
 	};
 }

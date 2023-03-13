@@ -1,21 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import logo from '../assets/images/logo.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts } from '../REDUX/actions';
 import { Link } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 const Header = () => {
-	let products = useSelector((state) => state.allProducts);
-
-	let dispatch = useDispatch();
-	useEffect(() => {
-		if (!products.length) dispatch(getAllProducts());
-	}, [dispatch]);
 	return (
 		<>
 			<nav className='navbar navbar-expand-lg bg-body-tertiary bg-success'>
 				<div className='container'>
-					<Link to='#' className='navbar-brand' href='#'>
+					<Link to='home' className='navbar-brand'>
 						<img src={logo} alt='logo' width='50' height='60' />
 					</Link>
 					<button
@@ -35,23 +27,23 @@ const Header = () => {
 						id='navbarNavAltMarkup'
 					>
 						<div className='navbar-nav d-flex  align-items-center'>
-							<a
+							<Link
+								to={'/'}
 								className='nav-link fw-bolder text-light'
 								aria-current='page'
-								href='#'
 							>
 								Inicio
-							</a>
-							<a className='nav-link fw-bolder text-light' href='#'>
+							</Link>
+							<Link to={'/products'} className='nav-link fw-bolder text-light'>
 								Productos
-							</a>
-							<a className='nav-link  text-light' href='#'>
+							</Link>
+							<Link to={'/cart'} className='nav-link  text-light' href='#'>
 								<i className='bi bi-cart-check-fill fs-4'></i>
-							</a>
+							</Link>
 
-							<a className='nav-link  text-light' href='#'>
+							<Link to={'/user'} className='nav-link  text-light' href='#'>
 								<i className='bi bi-person fs-4'></i>
-							</a>
+							</Link>
 						</div>
 					</div>
 				</div>
