@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { logout } from '../REDUX/actions';
 const Header = () => {
+	const dispatch = useDispatch();
+	const isAuthenticated = useSelector((state) => state.isAuthenticated);
+	const handleCLick = () => {
+		dispatch(logout());
+	};
 	return (
 		<>
 			<nav className='navbar navbar-expand-lg bg-body-tertiary bg-success'>
@@ -40,10 +47,20 @@ const Header = () => {
 							{/* <Link to={'/cart'} className='nav-link  text-light' href='#'>
 								<i className='bi bi-cart-check-fill fs-4'></i>
 							</Link> */}
-
-							<Link to={'/user'} className='nav-link  text-light' href='#'>
-								<i className='bi bi-person fs-4'></i>
-							</Link>
+							{isAuthenticated ? (
+								<div
+									style={{ cursor: 'pointer' }}
+									onClick={handleCLick}
+									to='/logout'
+									className='nav-link fw-bolder text-light d-flex align-items-center'
+								>
+									Salir <i className='bi bi-box-arrow-right fs-4'></i>
+								</div>
+							) : (
+								<Link to='/login' className='nav-link  text-light' href='#'>
+									<i className='bi bi-person fs-4'></i>
+								</Link>
+							)}
 						</div>
 					</div>
 				</div>

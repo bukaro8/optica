@@ -1,9 +1,16 @@
-import { GET_PRODUCTS, PRODUCT_DETAIL, LOGIN, LOGOUT } from '../actions';
+import {
+	GET_PRODUCTS,
+	PRODUCT_DETAIL,
+	LOGIN,
+	LOGOUT,
+	REGISTER_USER,
+} from '../actions';
 
 const initialState = {
 	products: [],
 	productDetail: {},
 	user: {},
+	isAuthenticated: false,
 };
 function rootReducer(state = initialState, action) {
 	switch (action.type) {
@@ -21,6 +28,16 @@ function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				isAuthenticated: true,
+				user: action.payload,
+			};
+		case LOGOUT:
+			return {
+				...state,
+				isAuthenticated: false,
+			};
+		case REGISTER_USER:
+			return {
+				...state,
 				user: action.payload,
 			};
 		default:

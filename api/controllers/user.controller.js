@@ -23,8 +23,10 @@ const registerUser = async (req, res) => {
 const login = async (req, res) => {
 	const { email, password } = req.body;
 	//?Check if email and password is entered by user
+
 	if (!email || !password) {
 		return res
+
 			.status(400)
 			.send({ message: 'Por favor ingrese el correo y password' });
 	}

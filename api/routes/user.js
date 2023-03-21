@@ -16,7 +16,7 @@ const {
 } = require('../controllers/user.controller.js');
 const { isAuthenticated, authorizeRoles } = require('../middlewares/auth.js');
 router.post('/register', registerUser);
-router.get('/login', login);
+router.post('/login', login);
 router.get('/logout', logout);
 router.post('/password/forgot', forgotPassword);
 router.put('/password/reset/:token', resetPassword);
