@@ -7,7 +7,7 @@ const Header = () => {
 		<>
 			<nav className='navbar navbar-expand-lg bg-body-tertiary bg-success'>
 				<div className='container'>
-					<Link to='home' className='navbar-brand'>
+					<Link to='/' className='navbar-brand'>
 						<img src={logo} alt='logo' width='50' height='60' />
 					</Link>
 					<button
@@ -37,9 +37,9 @@ const Header = () => {
 							<Link to={'/products'} className='nav-link fw-bolder text-light'>
 								Productos
 							</Link>
-							<Link to={'/cart'} className='nav-link  text-light' href='#'>
+							{/* <Link to={'/cart'} className='nav-link  text-light' href='#'>
 								<i className='bi bi-cart-check-fill fs-4'></i>
-							</Link>
+							</Link> */}
 
 							<Link to={'/user'} className='nav-link  text-light' href='#'>
 								<i className='bi bi-person fs-4'></i>
