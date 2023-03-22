@@ -42,7 +42,7 @@ export function logout() {
 		});
 	};
 }
-export function registerUser(name, password, email) {
+export function registerUser(name, email, password) {
 	return async (dispatch) => {
 		const json = await back.post('/register', { name, password, email });
 		return dispatch({

@@ -38,6 +38,7 @@ function rootReducer(state = initialState, action) {
 		case REGISTER_USER:
 			return {
 				...state,
+				isAuthenticated: true,
 				user: action.payload,
 			};
 		default:

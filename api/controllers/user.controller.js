@@ -4,6 +4,7 @@ const sendEmail = require('../utils/sendEmail.js');
 const crypto = require('crypto');
 const registerUser = async (req, res) => {
 	const { name, email, password, avatar, role } = req.body;
+
 	try {
 		const user = await User.create({
 			name,
