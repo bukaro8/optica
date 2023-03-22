@@ -42,12 +42,17 @@ export function logout() {
 		});
 	};
 }
-export function registerUser(name, email, password) {
+export function registerUser(userData) {
+	const config = {
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+	};
 	return async (dispatch) => {
-		const json = await back.post('/register', { name, password, email });
+		const { data } = await back.post('/register', userData, config);
 		return dispatch({
 			type: REGISTER_USER,
-			payload: json.data,
+			payload: data.user,
 		});
 	};
 }
