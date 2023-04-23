@@ -25,9 +25,10 @@ const Hero = () => {
 					amplia selección y encuentra el que mejor se adapte a ti.
 				</p>
 				<div className='d-flex  justify-content-around'>
-					<button className='btn btn-success fw-bold'>
-						<Link to='/products'>Ver Mas</Link>
-					</button>
+					<Link className='btn btn-success fw-bold' to='/products'>
+						Ver Mas
+					</Link>
+
 					{/* <button className='btn btn-secondary fw-bold'>Lentes de Sol </button> */}
 				</div>
 			</div>
