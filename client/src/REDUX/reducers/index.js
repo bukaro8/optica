@@ -4,6 +4,9 @@ import {
 	LOGIN,
 	LOGOUT,
 	REGISTER_USER,
+	LOAD_USER,
+	DELETE_PRODUCT,
+	CREATE_PRODUCT,
 } from '../actions';
 
 const initialState = {
@@ -11,6 +14,7 @@ const initialState = {
 	productDetail: {},
 	user: {},
 	isAuthenticated: false,
+	product: {},
 };
 function rootReducer(state = initialState, action) {
 	switch (action.type) {
@@ -40,6 +44,21 @@ function rootReducer(state = initialState, action) {
 				...state,
 				isAuthenticated: true,
 				user: action.payload,
+			};
+		case LOAD_USER:
+			return {
+				...state,
+				isAuthenticated: true,
+				user: action.payload,
+			};
+		case DELETE_PRODUCT:
+			return {
+				...state,
+			};
+		case CREATE_PRODUCT:
+			return {
+				...state,
+				product: action.payload.product,
 			};
 		default:
 			return state;

@@ -4,24 +4,26 @@ import Metadata from '../Metadata';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userLogin } from '../../REDUX/actions';
+import UploadWidget from '../UploadWidget';
 const Login = ({ history }) => {
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const isAuthenticated = useSelector((state) => state.isAuthenticated);
+	const userAuth = useSelector((state) => state.user.role);
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(userLogin(email, password));
 	};
 	useEffect(() => {
-		if (isAuthenticated) {
-			history.push('/');
+		if (isAuthenticated && userAuth === 'admin') {
+			history.push('/dashboard');
 		}
 	}, [dispatch, isAuthenticated, history]);
 	return (
 		<div
-			style={{ height: '100vh', minWidth: '10rem' }}
-			className=' container container-fluid d-flex justify-content-center align-items-center'
+			style={{ minWidth: '12rem' }}
+			className=' container container-fluid d-flex justify-content-center mt-4'
 		>
 			<Metadata title='Login' />
 			<div className='row wrapper '>
@@ -50,10 +52,9 @@ const Login = ({ history }) => {
 							/>
 						</div>
 
-						<Link to='/password/forgot' className='float-right mb-4'>
+						{/* <Link to='/password/forgot' className='float-right mb-4'>
 							Forgot Password?
-						</Link>
-
+						</Link> */}
 						<button
 							id='login_button'
 							type='submit'
@@ -62,10 +63,11 @@ const Login = ({ history }) => {
 							LOGIN
 						</button>
 
-						<Link to='/register' className='float-right mt-3'>
+						{/* <Link to='/register' className='float-right mt-3'>
 							New User?
-						</Link>
+						</Link> */}
 					</form>
+					{/* <UploadWidget /> */}
 				</div>
 			</div>
 		</div>

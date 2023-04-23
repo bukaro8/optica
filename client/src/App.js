@@ -9,7 +9,17 @@ import Login from './components/user/Login';
 import Products from './components/Products';
 import ProductDetail from './components/ProductDetail';
 import Register from './components/user/Register';
-function App() {
+// import { loadUser } from './REDUX/actions';
+// import store from './REDUX/store';
+// import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import Dashboard from './components/admin/Dashboard';
+import NotFoundPage from './components/NotFoundPage';
+import ProductList from './components/admin/ProductList';
+import CreateProduct from './components/admin/CreateProduct';
+function App({ history }) {
+	const userAuth = useSelector((state) => state.user.role);
+
 	return (
 		<div className='App'>
 			<Header />
@@ -24,6 +34,16 @@ function App() {
 			<Route path='/product/:id' component={ProductDetail} exact />
 			<Route path='/login' component={Login} />
 			<Route path='/register' component={Register} />
+
+			<Route path='/dashboard'>
+				{userAuth === 'admin' ? <Dashboard /> : <NotFoundPage />}
+			</Route>
+			<Route path='/admin/products'>
+				{userAuth === 'admin' ? <ProductList /> : <NotFoundPage />}
+			</Route>
+			<Route path='/admin/product/create'>
+				{userAuth === 'admin' ? <CreateProduct /> : <NotFoundPage />}
+			</Route>
 		</div>
 	);
 }

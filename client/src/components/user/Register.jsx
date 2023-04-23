@@ -22,14 +22,14 @@ const Register = ({ history }) => {
 	};
 
 	return (
-		<div className='container container-fluid d-flex justify-content-center'>
+		<div className='container container-fluid d-flex justify-content-center mt-3'>
 			<div className='row wrapper '>
 				<div className=''>
 					<form
 						className='shadow-lg p-3 d-flex flex-column justify-content-center'
 						encType='multipart/form-data'
 					>
-						<h1 className='mb-3'>Registro</h1>
+						<h1 className='mb-3 text-success'>Registro</h1>
 
 						<div className='form-group'>
 							<label htmlFor='email_field'>Nombre</label>
@@ -66,32 +66,10 @@ const Register = ({ history }) => {
 							/>
 						</div>
 
-						<div className='form-group '>
-							<label htmlFor='avatar_upload'>Imagen</label>
-							<div className='d-flex align-items-center flex-wrap'>
-								<div>
-									<figure className='avatar mr-3 item-rtl'>
-										<img src='' className='rounded-circle' alt='image' />
-									</figure>
-								</div>
-								<div className='custom-file'>
-									<input
-										type='file'
-										name='avatar'
-										className='custom-file-input'
-										id='customFile'
-									/>
-									<label className='custom-file-label' htmlFor='customFile'>
-										Choose Avatar
-									</label>
-								</div>
-							</div>
-						</div>
-
 						<button
 							id='register_button'
 							type='submit'
-							className='btn btn-success py-3'
+							className='btn btn-success py-3 mt-3'
 							onClick={handleOnClick}
 						>
 							REGISTER

@@ -8,18 +8,25 @@ import Metadata from './Metadata';
 
 const Products = () => {
 	let products = useSelector((state) => state.products);
+
 	const [brand, setBrand] = useState('');
+	let accum = [];
 	const list = () =>
-		products?.map((item) => (
-			<option
-				value={item.category}
-				className='text-decoration-none '
-				key={item._id}
-				style={{ cursor: 'pointer' }}
-			>
-				{item.category}
-			</option>
-		));
+		products?.map((item) => {
+			if (!accum.includes(item.category)) {
+				accum.push(item.category);
+				return (
+					<option
+						value={item.category}
+						className='text-decoration-none '
+						key={item._id}
+						style={{ cursor: 'pointer' }}
+					>
+						{item.category}
+					</option>
+				);
+			}
+		});
 
 	let dispatch = useDispatch();
 	useEffect(() => {

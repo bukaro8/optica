@@ -18,20 +18,18 @@ router.get('/product/:productId', getProductById);
 //!protected routes===============
 router.post(
 	'/admin/product/new',
-	isAuthenticated,
-	authorizeRoles('admin'),
+
 	newProduct
 );
 router.put(
 	'/admin/product/:productId',
-	isAuthenticated,
-	authorizeRoles('admin'),
+
 	productUpdate
 );
 router.delete(
 	'/admin/product/:productId',
-	isAuthenticated,
-	authorizeRoles('admin'),
+	// isAuthenticated,
+	// authorizeRoles('admin'),
 	deleteProduct
 );
 //!===============================

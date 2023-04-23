@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { logout } from '../REDUX/actions';
+import Sidebar from './admin/Sidebar';
 const Header = () => {
 	const dispatch = useDispatch();
+	const userAuth = useSelector((state) => state.user.role);
 	const isAuthenticated = useSelector((state) => state.isAuthenticated);
 	const handleCLick = () => {
 		dispatch(logout());
@@ -62,6 +64,7 @@ const Header = () => {
 								</Link>
 							)}
 						</div>
+						{userAuth === 'admin' ? <Sidebar /> : <span></span>}
 					</div>
 				</div>
 			</nav>

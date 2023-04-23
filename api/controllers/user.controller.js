@@ -2,22 +2,16 @@ const User = require('../models/user.js');
 const sendToken = require('../utils/jwtToken.js');
 const sendEmail = require('../utils/sendEmail.js');
 const crypto = require('crypto');
-const cloudinary = require('cloudinary');
 const registerUser = async (req, res) => {
 	const { name, email, password, avatar, role } = req.body;
-	const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-		folder: 'avatars',
-		width: 150,
-		crop: 'scale',
-	});
 	try {
 		const user = await User.create({
 			name,
 			email,
 			password,
 			avatar: {
-				public_id: result.public_id,
-				url: result.secure_url,
+				public_id: 'photos/cld-sample.jpg',
+				url: 'https://res.cloudinary.com/dsek7f0ce/image/upload/v1675606724/cld-sample.jpg',
 			},
 			role,
 		});
@@ -29,10 +23,8 @@ const registerUser = async (req, res) => {
 const login = async (req, res) => {
 	const { email, password } = req.body;
 	//?Check if email and password is entered by user
-
 	if (!email || !password) {
 		return res
-
 			.status(400)
 			.send({ message: 'Por favor ingrese el correo y password' });
 	}
@@ -40,15 +32,12 @@ const login = async (req, res) => {
 		const user = await User.findOne({ email }).select('+password');
 		const isPasswordMatched = await user.comparePassword(password);
 		if (!isPasswordMatched) {
-			return res.status(401).send({
-				success: false,
-				message: 'error password',
-			});
+			return res.status(401).send(data);
 		} else {
 			sendToken(user, 200, res);
 		}
 	} catch (error) {
-		res.status(401).send({ message: error.message });
+		res.status(401).send({ message: 'Clave o correo incorrectos' });
 	}
 };
 const logout = async (req, res, next) => {

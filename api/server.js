@@ -1,7 +1,8 @@
 const app = require('./app');
 const dotenv = require('dotenv');
 const connectDatabase = require('./config/database.js');
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
+const cors = require('cors');
 //*Setting up config file
 dotenv.config({ path: 'api/config/config.env' });
 
