@@ -1,6 +1,6 @@
 import React from 'react';
 import banner from '../../assets/images/hero.webp';
-import Link from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const Hero = () => {
 	return (
 		<div
