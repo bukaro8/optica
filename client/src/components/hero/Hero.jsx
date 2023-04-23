@@ -1,5 +1,6 @@
 import React from 'react';
 import banner from '../../assets/images/hero.webp';
+import Link from 'react-router-dom';
 const Hero = () => {
 	return (
 		<div
@@ -25,9 +26,9 @@ const Hero = () => {
 				</p>
 				<div className='d-flex  justify-content-around'>
 					<button className='btn btn-success fw-bold'>
-						Marcos para Lentes
+						<Link to='/products'>Ver Mas</Link>
 					</button>
-					<button className='btn btn-secondary fw-bold'>Lentes de Sol </button>
+					{/* <button className='btn btn-secondary fw-bold'>Lentes de Sol </button> */}
 				</div>
 			</div>
 		</div>
