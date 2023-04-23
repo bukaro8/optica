@@ -7,16 +7,17 @@ import Swal from 'sweetalert2';
 import Dropzone from 'react-dropzone';
 import { Container } from 'reactstrap';
 import axios from 'axios';
+import Loader from '../Loader';
 const CreateProduct = ({ history }) => {
 	const initialValues = {
 		name: '',
-		price: 0,
+		price: '',
 		description: '',
 		category: '',
-		stock: 0,
-		// images: [],
+		stock: '',
+		images: [],
 	};
-	const [images, setImages] = useState({ array: {} });
+	const [imagesIn, setImages] = useState([]);
 	const [data, setData] = useState(initialValues);
 	const [dataErrors, setDataErrors] = useState({});
 	const [loading, setLoading] = useState(false);
@@ -47,25 +48,17 @@ const CreateProduct = ({ history }) => {
 	const { success } = useSelector((state) => state.product);
 	const [isSubmited, setIsSubmited] = useState(false);
 	useEffect(() => {
-		if (Object.keys(dataErrors) === 0 && isSubmited) {
-			console.log(data);
-		}
+		setData({ ...data, images: imagesIn });
 		if (success) {
 			// history.push('/admin/products');
-
-			Swal.fire({
-				title: 'Buen rabajo',
-				text: 'Haz creado un nuevo articulo',
-				icon: 'success',
-				timer: 3000,
-			});
-			setData(initialValues);
 		}
-	}, [dispatch, dataErrors]);
+	}, [dispatch, dataErrors, imagesIn]);
+
 	const handleOnChange = (e) => {
 		e.preventDefault();
 		setData({ ...data, [e.target.name]: e.target.value });
 	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setDataErrors(validate(data));
@@ -78,8 +71,16 @@ const CreateProduct = ({ history }) => {
 				price: parseInt(data.price),
 			});
 		}
-
+		console.log(data);
 		dispatch(createProduct(data));
+		Swal.fire({
+			title: 'Buen rabajo',
+			text: 'Haz creado un nuevo articulo',
+			icon: 'success',
+			timer: 3000,
+		});
+		setData(initialValues);
+		setImages([]);
 	};
 
 	const validate = (values) => {
@@ -107,6 +108,9 @@ const CreateProduct = ({ history }) => {
 		if (data.stock < 0) {
 			errors.stock = 'El stock debe ser mayor a -1';
 		}
+		if (data.images.length === 0) {
+			errors.images = 'No has agregado imagenes';
+		}
 		return errors;
 	};
 	const handleDrop = (files) => {
@@ -118,10 +122,22 @@ const CreateProduct = ({ history }) => {
 			formData.append('api_key', '736224911642424');
 			formData.append('timestamp', (Date.now() / 1000) | 0);
 			setLoading(true);
-			return axios.post(
-				'https://api.cloudinary.com/v1_1/dsek7f0ce/image/upload',
-				formData
-			);
+			return axios
+				.post(
+					'https://api.cloudinary.com/v1_1/dsek7f0ce/image/upload',
+					formData
+				)
+
+				.then((res) => {
+					const { data } = res;
+					const pic = {
+						public_id: data.public_id,
+						url: data.secure_url,
+					};
+					setImages([...imagesIn, pic]);
+
+					setData({ ...data, images: imagesIn });
+				});
 		});
 		axios.all(uploaders).then(() => {
 			setLoading(false);
@@ -130,9 +146,35 @@ const CreateProduct = ({ history }) => {
 	return (
 		<div className='container '>
 			<Metadata title='Nuevo Producto' />
+
 			<form onSubmit={handleSubmit} className='d-flex justify-content-center'>
 				<fieldset className='d-flex  flex-column col-lg-6 rounded mt-3 align-items-center bg-body shadow'>
 					<legend className='h2 text-success mt-4'>Creacion de Producto</legend>
+					{loading ? (
+						<Loader />
+					) : (
+						<Container className='text-center mb-3 col-lg-8 border border-opacity-25 rounded border-success border-3'>
+							<Dropzone
+								onDrop={(e) => handleDrop(e)}
+								onChange={(e) => setImages(e.target.value)}
+								value={imagesIn}
+							>
+								{({ getRootProps, getInputProps }) => (
+									<section>
+										<div {...getRootProps({ className: 'dropzone' })}>
+											<input {...getInputProps()} />
+											<span>📂</span>
+											<p>Coloca tus imagenes aqui</p>
+											<p>Numero de Imagenes {imagesIn.length}</p>
+										</div>
+									</section>
+								)}
+							</Dropzone>
+							{dataErrors?.images && (
+								<p className='alert alert-danger'>{dataErrors.name}</p>
+							)}
+						</Container>
+					)}
 					<div className='mb-3 col-lg-8'>
 						<input
 							name='name'
@@ -209,32 +251,16 @@ const CreateProduct = ({ history }) => {
 							<p className='alert alert-danger'>{dataErrors.category}</p>
 						)}
 					</div>
-					<Container className='text-center mb-3 col-lg-8 border border-opacity-25 rounded border-success border-3'>
-						<Dropzone
-							onDrop={(e) => handleDrop(e)}
-							onChange={(e) => setImages(e.target.value)}
-							value={images}
-						>
-							{({ getRootProps, getInputProps }) => (
-								<section>
-									<div {...getRootProps({ className: 'dropzone' })}>
-										<input {...getInputProps()} />
-										<span>📂</span>
-										<p>Coloca tus imagenes aqui</p>
-									</div>
-								</section>
-							)}
-						</Dropzone>
-					</Container>
+
 					{/* <div className='mb-3 col-lg-8'>
 						<input
-							name='images'
+							name='imagesIn'
 							type='file'
 							className='form-control'
-							id='images'
+							id='imagesIn'
 							placeholder='image'
 						/>
-						<img src={data.images[0]} alt='foto' />
+						<img src={imagesIn[0]} alt='foto' />
 					</div> */}
 					<input
 						type='submit'

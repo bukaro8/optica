@@ -6,8 +6,8 @@ import Loader from './Loader';
 import Metadata from './Metadata';
 
 const Home = () => {
-	let products = useSelector((state) => state.products.slice(0, 4));
-
+	let productsAll = useSelector((state) => state.products);
+	const products = productsAll.reverse().slice(0, 4);
 	let dispatch = useDispatch();
 	useEffect(() => {
 		if (!products.length) dispatch(getAllProducts());
